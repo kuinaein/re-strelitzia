@@ -1,0 +1,14 @@
+{
+  "ja": {
+    "enum": {
+      "accountType": {
+        "ASSET": "資産",
+        "LIABILITY": "負債",
+        "NET_ASSET": "純資産",
+        "REVENUE": "収益",
+        "EXPENSE": "費用",
+        "OTHER": "その他"
+      }
+    }
+  }
+}

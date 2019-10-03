@@ -7,5 +7,5 @@ use App\Util\Enum;
 
 class SystemAccountTitleKey extends Enum
 {
-    const OPENING_BALANCE = 'OPENING_BALANCE';
+    public const OPENING_BALANCE = 'OPENING_BALANCE';
 }

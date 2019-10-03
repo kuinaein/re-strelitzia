@@ -1,10 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "kuinaein/re-strelitzia",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Re:Strelitzia",
     "keywords": [
-        "framework",
-        "laravel"
     ],
     "license": "MIT",
     "require": {

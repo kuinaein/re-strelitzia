@@ -25,12 +25,21 @@ class AccountTitleDao
         $dto = new AccountTitle();
         $dto->id = $model->id;
         $dto->name = $model->name;
-        $dto->systemKey = '' === $model->systemKey ? null : new SystemAccountTitleKey($model->system_key);
+        $dto->systemKey = '' === $model->system_key ? null : new SystemAccountTitleKey($model->system_key);
         $dto->type = new AccountTitleType($model->type);
         $dto->parentId = 0 === $model->parent_id ? null : $model->parent_id;
         $dto->createdAt = Carbon::createFromFormat(config('stre.datetime_format'), $model->created_at);
         $dto->updatedAt = Carbon::createFromFormat(config('stre.datetime_format'), $model->updated_at);
         return $dto;
+    }
+
+    private function convertDtoToModel(AccountTitle $dto): AccountTitleModel
+    {
+        $model = new AccountTitleModel();
+        $model->name = $dto->name;
+        $model->type = $dto->type->valueOf();
+        $model->parent_id = $dto->parentId ?? 0;
+        return $model;
     }
 
     public function all(): Collection {
@@ -43,5 +52,11 @@ class AccountTitleDao
     {
         $model = $this->repo->where('system_key', '=', $key)->firstOrFail();
         return $this->convertModelToDto($model);
+    }
+
+    public function createOrFail(AccountTitle $dto) {
+        $model = $this->convertDtoToModel($dto);
+        $model->save();
+        return $this->convertModelToDto($model->fresh());
     }
 }

@@ -1,2 +1,12 @@
 @import "~bootstrap-honoka/dist/css/bootstrap.min.css";
 @import "~font-awesome/scss/font-awesome";
+
+.btn + .btn {
+  margin-left: 1ex;
+}
+span.stre-fa--left::before {
+  margin-right: 0.5ex;
+}
+span.stre-fa--right::before {
+  margin-left: 0.5ex;
+}

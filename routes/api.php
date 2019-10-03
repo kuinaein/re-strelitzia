@@ -15,6 +15,6 @@ use Illuminate\Routing\Router;
 
 Route::group(['prefix' => 'account', 'namespace' => 'Account'], function (Router $router) : void {
     $router->resource('/', 'AccountApiController', ['only' => ['index']]);
-    // $router->resource('bs', 'BsAccountApiController', ['only' => ['store', 'update']]);
+    $router->resource('bs', 'BsAccountApiController', ['only' => ['store', 'update']]);
     // $router->resource('pl', 'PlAccountApiController', ['only' => ['store', 'update']]);
 });

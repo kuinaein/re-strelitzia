@@ -23,6 +23,6 @@ class AccountApiController extends Controller
      */
     public function index() : array
     {
-        return ['data' => $this->dao->all()];
+        return ['data' => $this->dao->all(), 'message' => 'OK'];
     }
 }
