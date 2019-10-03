@@ -1,5 +1,8 @@
 import Vue from 'vue';
+
 import './bootstrap';
+
+import { router } from '@/app/router';
 import Frame from '@/app/Frame';
 
 if ('production' !== process.env.NODE_ENV) {
@@ -37,7 +40,6 @@ window.axios.interceptors.response.use(res => res, err => {
 
 window.theApp = new Vue(Object.assign({}, Frame, {
   el: '#app',
-//   router,
+  router,
 //   store,
-//   i18n,
 }));

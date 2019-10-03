@@ -1,0 +1,8 @@
+mixin loading
+  .alert.alert-info
+    +faIcon('spinner', 'fa-spin fa-2x fa-fw mr-2')
+    | ロード中...
+
+mixin faIcon(icon, clazz)
+  - clazz = clazz || 'stre-fa--left'
+  span.fa(class=`fa-${icon} ${clazz}` title=icon alt=icon)

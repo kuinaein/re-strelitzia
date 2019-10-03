@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'account', 'namespace' => 'Account'], function (Router $router) : void {
+    $router->resource('/', 'AccountApiController', ['only' => ['index']]);
+    // $router->resource('bs', 'BsAccountApiController', ['only' => ['store', 'update']]);
+    // $router->resource('pl', 'PlAccountApiController', ['only' => ['store', 'update']]);
 });

@@ -13,6 +13,11 @@ const path = require('path');
  |
  */
 
+const usePug = {
+  loader: 'pug-plain-loader',
+  options: { basedir: path.resolve(__dirname, 'resources/js') },
+};
+
 mix.js('resources/js/app.js', 'public/js')
   .webpackConfig({
     resolve: {
@@ -28,10 +33,10 @@ mix.js('resources/js/app.js', 'public/js')
         oneOf: [
           {
             resourceQuery: /^\?vue/,
-            use: ['pug-plain-loader'],
+            use: [usePug],
           },
           {
-            use: ['raw-loader', 'pug-plain-loader'],
+            use: ['raw-loader', usePug],
           },
         ],
       }],

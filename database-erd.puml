@@ -1,0 +1,48 @@
+@startuml "データベース仕様書"
+
+!define MASTER  <<M, yellow>>
+!define TRAN    <<T, aqua>>
+
+entity "account_title (勘定科目)" as account_title MASTER {
+  +id SERIAL [PK]
+  name VARCHAR [UQ]
+  system_key VARCHAR
+  --
+  type [[ENUM{ASSET, LIABILITY, NET_ASSET, REVENUE, EXPENSE, OTHER}]]
+  #parent_id INT
+  --
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+' entity "accounting_journal (仕訳)" as accounting_journal TRAN {
+'   +id SERIAL [PK]
+'   #debit_account_id (借方勘定科目ID) INT [FK]
+'   #credit_account_id (貸方勘定科目ID) INT [FK]
+'   --
+'   journal_date DATE
+'   remarks (摘要) VARCHAR
+'   amount (金額) INT
+'   --
+'   created_at TIMESTAMP
+'   updated_at TIMESTAMP
+' }
+' account_title ----o{ accounting_journal
+
+' entity "journal_schedule (定期仕訳スケジュール)" as journal_schedule MASTER {
+'   +id SERIAL [PK]
+'   #debit_account_id (借方勘定科目ID) INT [FK]
+'   #credit_account_id (貸方勘定科目ID) INT [FK]
+'   --
+'   enabled (有効フラグ) BOOLEAN
+'   post_date (仕訳日) INT
+'   remarks (摘要) VARCHAR
+'   amount (金額) INT
+'   next_post_date (次の仕訳日) DATE
+'   --
+'   created_at TIMESTAMP
+'   updated_at TIMESTAMP
+' }
+' account_title ----o{ journal_schedule
+
+@enduml

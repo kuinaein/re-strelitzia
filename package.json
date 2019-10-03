@@ -16,6 +16,7 @@
         "bootstrap-honoka": "^4.3.1",
         "bootstrap-jquery-slim": "^4.1.1-1",
         "cross-env": "^5.1",
+        "font-awesome": "^4.7.0",
         "jquery-slim": "^3.0.0",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
@@ -25,6 +26,7 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.6.10",
+        "vue-router": "^3.1.3",
         "vue-template-compiler": "^2.6.10"
     },
     "devDependencies": {
