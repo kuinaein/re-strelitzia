@@ -1,0 +1,33 @@
+env:
+  browser: true
+  es6: true
+  jquery: true
+extends:
+  - 'eslint:recommended'
+  - 'plugin:vue/essential'
+parserOptions:
+  ecmaVersion: 2015
+  sourceType: module
+globals:
+  process: false
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+
+  no-console: off
+  no-unused-vars:
+    - error
+    - args: none
+  comma-dangle:
+    - error
+    - always-multiline

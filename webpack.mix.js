@@ -1,4 +1,6 @@
+/* eslint-env node */
 const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,4 +14,27 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+  .webpackConfig({
+    resolve: {
+      extensions: ['.js', '.json', '.vue'],
+      alias: {
+        '@': path.resolve(__dirname, './resources/js'),
+        vue$: 'vue/dist/vue.runtime.esm.js',
+      },
+    },
+    module: {
+      rules: [{
+        test: /\.pug$/,
+        oneOf: [
+          {
+            resourceQuery: /^\?vue/,
+            use: ['pug-plain-loader'],
+          },
+          {
+            use: ['raw-loader', 'pug-plain-loader'],
+          },
+        ],
+      }],
+    },
+  })
+  .sass('resources/sass/app.scss', 'public/css');
