@@ -13,4 +13,6 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('auth');
+Route::get('login/google', 'Auth\LoginController@redirectToProvider')->name('login');
+Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
