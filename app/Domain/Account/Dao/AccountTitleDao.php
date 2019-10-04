@@ -35,7 +35,7 @@ class AccountTitleDao
 
     private function convertDtoToModel(AccountTitle $dto): AccountTitleModel
     {
-        $model = new AccountTitleModel();
+        $model = is_null($dto->id) ? new AccountTitleModel() : $this->repo->findOrFail($dto->id);
         $model->name = $dto->name;
         $model->type = $dto->type->valueOf();
         $model->parent_id = $dto->parentId ?? 0;
@@ -49,6 +49,12 @@ class AccountTitleDao
         });
     }
 
+    public function findOrFail(int $id): AccountTitle
+    {
+        $model = $this->repo->findOrFail($id);
+        return $this->convertModelToDto($model);
+    }
+
     public function findOrFailBySystemKey(SystemAccountTitleKey $key): AccountTitle
     {
         $model = $this->repo->where('system_key', '=', $key)->firstOrFail();
@@ -56,6 +62,11 @@ class AccountTitleDao
     }
 
     public function createOrFail(AccountTitle $dto)
+    {
+        return $this->updateOrFail($dto);
+    }
+
+    public function updateOrFail(AccountTitle $dto)
     {
         $model = $this->convertDtoToModel($dto);
         $model->save();

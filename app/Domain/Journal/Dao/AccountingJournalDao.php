@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Journal\Dao;
 
+use App\Domain\Account\Dto\AccountTitle;
 use App\Domain\Journal\Dto\AccountingJournal;
 use App\Domain\Journal\Model\AccountingJournalModel;
 use Exception;
@@ -46,6 +47,14 @@ class AccountingJournalDao
         return $model;
     }
 
+    public function findOrFailByAccount(AccountTitle $debit, AccountTitle $credit): AccountingJournal
+    {
+        /** @var AccountingJournalModel */
+        $model = $this->repo->where(['debit_account_id' => $debit->id, 'credit_account_id' => $credit->id])
+            ->firstOrFail();
+        return $this->convertModelToDto($model);
+    }
+
     public function createOrFail(AccountingJournal $dto)
     {
         $model = $this->convertDtoToModel($dto);
@@ -55,5 +64,10 @@ class AccountingJournalDao
             throw new Exception();
         }
         return $this->convertModelToDto($freshModel);
+    }
+
+    public function updateOrFail(AccountingJournal $dto)
+    {
+        return $this->createOrFail($dto);
     }
 }

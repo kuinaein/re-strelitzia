@@ -12,6 +12,7 @@ use App\Domain\Journal\Dao\AccountingJournalDao;
 use App\Domain\Journal\Dto\AccountingJournal;
 use Illuminate\Support\Carbon;
 use DB;
+use Log;
 
 /**
  * Accountに置くと名前空間同士の相互参照になるのでこちらに置く.
@@ -57,7 +58,7 @@ class BsAccountSaveService
             $this->journalDao->createOrFail($j);
             return $a;
         });
-        \Log::notice('資産・負債科目の追加', ['新科目' => $a]);
+        Log::notice('資産・負債科目の追加', ['新科目' => $a]);
         return $a;
     }
 
@@ -67,25 +68,24 @@ class BsAccountSaveService
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function update(AccountTitle $bsAccount, int $openingBalance) // : BsAccount
+    public function update(AccountTitle $bsAccount, int $openingBalance): AccountTitle
     {
-        // $op = $this->accountDao->findOrFailBySystemKey(
-        //     new SystemAccountTitleKey(SystemAccountTitleKey::OPENING_BALANCE)
-        // );
-        // $opJournal = $bsAccount->type === AccountTitleType::ASSET
-        //     ? $this->journalDao->findOrFailByAccount($bsAccount, $op)
-        //     : $this->journalDao->findOrFailByAccount($op, $bsAccount);
+        $op = $this->accountDao->findOrFailBySystemKey(
+            new SystemAccountTitleKey(SystemAccountTitleKey::OPENING_BALANCE)
+        );
+        $opJournal = $bsAccount->type->valueOf() === AccountTitleType::ASSET
+            ? $this->journalDao->findOrFailByAccount($bsAccount, $op)
+            : $this->journalDao->findOrFailByAccount($op, $bsAccount);
 
-        // return \DB::transaction(function () use ($bsAccount, $openingBalance, $opJournal) {
-        //     $old = $this->dao->findOrFail($bsAccount->id);
-        //     $this->validate($bsAccount, $openingBalance, $old);
-        //     $new = $old->fill($bsAccount);
-        //     $opJournal->amount = $openingBalance;
-        //     $a = $this->dao->updateOrFail($new);
-        //     $this->journalDao->save($opJournal);
-        //     optional(logger())->notice('資産・負債科目の更新', ['科目' => $a]);
-        //     return $a;
-        // });
+        return DB::transaction(function () use ($bsAccount, $openingBalance, $opJournal) {
+            $old = $this->accountDao->findOrFail($bsAccount->id);
+            $this->validate($bsAccount, $openingBalance, $old);
+            $opJournal->amount = $openingBalance;
+            $a = $this->accountDao->updateOrFail($bsAccount);
+            $this->journalDao->updateOrFail($opJournal);
+            Log::notice('資産・負債科目の更新', ['科目' => $a]);
+            return $a;
+        });
     }
 
     /**

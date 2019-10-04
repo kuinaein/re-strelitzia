@@ -147,18 +147,21 @@ export default extendVue({
       this.editing = this.$options.data().editing;
       this.$refs.editDlg.open();
     },
-    //     edit (id) {
-    //       this.editing = {
-    //         bsAccount: Object.assign({}, this.accountTitleMap[id]),
-    //         openingBalance: null,
-    //       };
-    //       this.$refs.editDlg.open();
-    //       axios.get(`${this.apiRoot}/journal/opening/${this.editing.bsAccount.id}`).then(res => {
-    //         this.editing.openingBalance = res.data.data.amount;
-    //       }).catch(() => {
-    //         alert('開始残高を取得できません');
-    //       });
-    //     },
+    edit(id) {
+      this.editing = {
+        bsAccount: Object.assign({}, this.accountTitleMap[id]),
+        openingBalance: null,
+      };
+      this.$refs.editDlg.open();
+      axios
+        .get(`${this.apiRoot}/journal/opening/${this.editing.bsAccount.id}`)
+        .then(res => {
+          this.editing.openingBalance = res.data.data.amount;
+        })
+        .catch(() => {
+          alert('開始残高を取得できません');
+        });
+    },
     doSave() {
       const promise = this.editing.bsAccount.id
         ? axios.put(
