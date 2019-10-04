@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Account;
 
@@ -22,7 +22,7 @@ class AccountApiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : array
+    public function index(): array
     {
         return ['data' => $this->dao->all(), 'message' => 'OK'];
     }
