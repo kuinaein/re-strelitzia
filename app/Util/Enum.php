@@ -1,5 +1,4 @@
-<?php
-declare (strict_types = 1);
+<?php declare (strict_types = 1);
 
 namespace App\Util;
 
@@ -46,7 +45,8 @@ abstract class Enum implements \JsonSerializable
         return $this->scalar;
     }
 
-    final public function jsonSerialize () {
+    final public function jsonSerialize()
+    {
         return $this->valueOf();
     }
 }

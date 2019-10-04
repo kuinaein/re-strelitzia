@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace App\Domain\Account\Dao;
 
@@ -42,8 +40,9 @@ class AccountTitleDao
         return $model;
     }
 
-    public function all(): Collection {
-        return $this->repo->all()->map(function($model){
+    public function all(): Collection
+    {
+        return $this->repo->all()->map(function ($model) {
             return $this->convertModelToDto($model);
         });
     }
@@ -54,7 +53,8 @@ class AccountTitleDao
         return $this->convertModelToDto($model);
     }
 
-    public function createOrFail(AccountTitle $dto) {
+    public function createOrFail(AccountTitle $dto)
+    {
         $model = $this->convertDtoToModel($dto);
         $model->save();
         return $this->convertModelToDto($model->fresh());

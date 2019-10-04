@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ruleset name="Custom_PSR2">
+  <file>./app</file>
+  <file>./bootstrap</file>
+  <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>
+  <file>./config</file>
+  <file>./database</file>
+  <file>./tests</file>
+  <file>./routes</file>
+  <rule ref="PSR2" />
+  <rule ref="PSR1.Classes.ClassDeclaration">
+    <exclude-pattern>*/re-strelitzia/database/*</exclude-pattern>
+  </rule>
+  <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php" />
+</ruleset>

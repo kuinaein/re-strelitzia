@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Providers;
 
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Carbon::serializeUsing(function($carbon) {
+        Carbon::serializeUsing(function ($carbon) {
             return $carbon->format(config('stre.datetime_format'));
         });
     }

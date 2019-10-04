@@ -1,5 +1,4 @@
-<?php
-declare (strict_types = 1);
+<?php declare (strict_types = 1);
 
 namespace App\Domain\Account\Dto;
 
@@ -16,7 +15,8 @@ namespace App\Domain\Account\Dto;
  */
 class AccountTitle
 {
-    public static function fromRequest(array $ar) {
+    public static function fromRequest(array $ar)
+    {
         $self = new AccountTitle();
         $self->name = $ar['name'];
         $self->type = new AccountTitleType($ar['type']);
