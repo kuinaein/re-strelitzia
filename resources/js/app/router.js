@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// import SummaryPage from '@/app/SummaryPage';
+import SummaryPage from '@/app/SummaryPage';
 import BsAccountListPage from '@/account/BsAccountListPage';
 import PlAccountListPage from '@/account/PlAccountListPage';
 // import JournalSchedulePage from '@/journal/JournalSchedulePage';
@@ -10,11 +10,11 @@ import PlAccountListPage from '@/account/PlAccountListPage';
 Vue.use(VueRouter);
 
 const routes = [
-  //   {
-  //     path: '/',
-  //     name: 'summary',
-  //     component: SummaryPage,
-  //   },
+  {
+    path: '/',
+    name: 'summary',
+    component: SummaryPage,
+  },
   {
     path: '/account/bs',
     name: 'bs-account-list',

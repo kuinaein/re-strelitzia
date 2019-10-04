@@ -22,7 +22,7 @@ Route::group(['prefix' => 'account', 'namespace' => 'Account'], function (Router
 });
 
 Route::group(['prefix' => 'journal', 'namespace' => 'Journal'], function (Router $router): void {
-    // $router->post('trial-balance', 'LedgerApiController@showTrialBalance');
+    $router->post('trial-balance', 'LedgerApiController@showTrialBalance');
     $router->get('opening/{bsAccountId}', 'LedgerApiController@showOpeningBalance');
     // $router->get('ledger/{accountId}/{month}', 'LedgerApiController@index');
     // $router->resource('schedule', 'ScheduleApiController', ['only' => ['index', 'store', 'update']]);

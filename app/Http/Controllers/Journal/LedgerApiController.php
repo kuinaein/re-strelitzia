@@ -26,10 +26,10 @@ class LedgerApiController extends Controller
      */
     private $accountDao;
 
-    // /**
-    //  * @var TrialBalanceBuildService
-    //  */
-    // private $trialBalanceBuildService;
+    /**
+     * @var TrialBalanceBuildService
+     */
+    private $trialBalanceBuildService;
 
     // /**
     //  * @var LedgerPageLoadService
@@ -38,13 +38,13 @@ class LedgerApiController extends Controller
 
     public function __construct(
         AccountingJournalDao $journalDao,
-        AccountTitleDao $accountDao
-        //     TrialBalanceBuildService $trialBalanceBuildService,
+        AccountTitleDao $accountDao,
+        TrialBalanceBuildService $trialBalanceBuildService
         //     LedgerPageLoadService $ledgerPageLoadService
     ) {
         $this->journalDao = $journalDao;
         $this->accountDao = $accountDao;
-        //     $this->trialBalanceBuildService = $trialBalanceBuildService;
+        $this->trialBalanceBuildService = $trialBalanceBuildService;
         //     $this->ledgerPageLoadService = $ledgerPageLoadService;
     }
 
@@ -56,14 +56,14 @@ class LedgerApiController extends Controller
     //     return ['data' => $result, 'message' => 'OK'];
     // }
 
-    // public function showTrialBalance(Request $request) : array
-    // {
-    //     $accountTypes = array_map(function ($t) {
-    //         return new AccountTitleType($t);
-    //     }, $request->accountTypes);
-    //     $r = $this->trialBalanceBuildService->build($accountTypes);
-    //     return ['data' => $r, 'message' => 'OK'];
-    // }
+    public function showTrialBalance(Request $request): array
+    {
+        $accountTypes = array_map(function ($t) {
+            return new AccountTitleType($t);
+        }, $request->accountTypes);
+        $r = $this->trialBalanceBuildService->build($accountTypes);
+        return ['data' => $r, 'message' => 'OK'];
+    }
 
     public function showOpeningBalance(Request $request, int $bsAccountId): array
     {
