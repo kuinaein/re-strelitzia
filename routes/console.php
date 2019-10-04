@@ -41,5 +41,5 @@ Artisan::command('stre:cs', function () {
     //     config_path(),
     // ]));
 
-    // passthru('npm run lint-fix');
+    passthru('yarn lint-fix');
 })->describe('lint, 静的解析とコード整形');

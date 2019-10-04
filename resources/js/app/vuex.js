@@ -6,8 +6,10 @@ import { AccountModule } from '@/account/AccountModule';
 
 Vue.use(Vuex);
 
-export const store = new Vuex.Store(Object.assign({}, CoreModule.vuexModule, {
-  modules: {
-    [AccountModule.namespace]: AccountModule.vuexModule,
-  },
-}));
+export const store = new Vuex.Store(
+  Object.assign({}, CoreModule.vuexModule, {
+    modules: {
+      [AccountModule.namespace]: AccountModule.vuexModule,
+    },
+  })
+);

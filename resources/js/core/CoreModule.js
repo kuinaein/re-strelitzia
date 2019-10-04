@@ -12,6 +12,6 @@ const vuexModule = {
 
 export const CoreModule = {
   stateKey,
-  mapState: (arg) => mapState(arg),
+  mapState: arg => mapState(arg),
   vuexModule,
 };

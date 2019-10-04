@@ -16,26 +16,26 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       onShownHandler: null,
     };
   },
-  mounted () {
+  mounted() {
     this.onShownHandler = () => {
       const el = this.$el.querySelector('[autofocus]');
       el && el.focus();
     };
     jQuery(this.$el).on('shown.bs.modal', this.onShownHandler);
   },
-  beforeDestroy () {
+  beforeDestroy() {
     jQuery(this.$el).off('shown.bs.modal', this.onShownHandler);
   },
   methods: {
-    open () {
+    open() {
       jQuery(this.$el).modal('show');
     },
-    close () {
+    close() {
       jQuery(this.$el).modal('hide');
     },
   },

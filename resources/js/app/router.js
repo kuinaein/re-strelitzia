@@ -10,31 +10,31 @@ import BsAccountListPage from '@/account/BsAccountListPage';
 Vue.use(VueRouter);
 
 const routes = [
-//   {
-//     path: '/',
-//     name: 'summary',
-//     component: SummaryPage,
-//   },
+  //   {
+  //     path: '/',
+  //     name: 'summary',
+  //     component: SummaryPage,
+  //   },
   {
     path: '/account/bs',
     name: 'bs-account-list',
     component: BsAccountListPage,
   },
-//   {
-//     path: '/account/pl',
-//     name: 'pl-account-list',
-//     component: PlAccountListPage,
-//   },
-//   {
-//     path: '/journal/schedule',
-//     name: 'journal-schedule',
-//     component: JournalSchedulePage,
-//   },
-//   {
-//     path: '/journal/ledger/:accountId/:month',
-//     name: 'ledger',
-//     component: LedgerPage,
-//   },
+  //   {
+  //     path: '/account/pl',
+  //     name: 'pl-account-list',
+  //     component: PlAccountListPage,
+  //   },
+  //   {
+  //     path: '/journal/schedule',
+  //     name: 'journal-schedule',
+  //     component: JournalSchedulePage,
+  //   },
+  //   {
+  //     path: '/journal/ledger/:accountId/:month',
+  //     name: 'ledger',
+  //     component: LedgerPage,
+  //   },
 ].map(v => {
   v.props = true;
   return v;

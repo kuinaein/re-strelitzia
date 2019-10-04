@@ -1,0 +1,20 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+  ],
+  "eslint.packageManager": "yarn",
+  "vetur.format.defaultFormatter.js": "none",
+  "yaml.format.singleQuote": true,
+  "yaml.schemas": {
+    "http://json.schemastore.org/prettierrc": [
+      ".prettierrc.yml"
+    ]
+  }
+}

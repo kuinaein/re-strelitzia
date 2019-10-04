@@ -1,7 +1,10 @@
 import { createNamespacedHelpers } from 'vuex';
 import axios from 'axios';
 
-import { ACCOUNT_PATH_SEPARATOR, AccountTitleTypeDesc } from '@/account/constants';
+import {
+  ACCOUNT_PATH_SEPARATOR,
+  AccountTitleTypeDesc,
+} from '@/account/constants';
 
 const stateKey = {
   accountTitles: 'accountTitles',
@@ -23,13 +26,16 @@ const vuexModule = {
     [stateKey.accountTitleMap]: null,
   },
   mutations: {
-    [mutaionKey.CACHE_ACCOUNT_TITLES] (state, {accountTitles, accountTitleMap}) {
+    [mutaionKey.CACHE_ACCOUNT_TITLES](
+      state,
+      { accountTitles, accountTitleMap }
+    ) {
       state[stateKey.accountTitles] = accountTitles;
       state[stateKey.accountTitleMap] = accountTitleMap;
     },
   },
   actions: {
-    [actionKey.LOAD_ALL] ({commit, rootState}) {
+    [actionKey.LOAD_ALL]({ commit, rootState }) {
       commit(mutaionKey.CACHE_ACCOUNT_TITLES, {});
       return axios.get(rootState.apiRoot + '/account').then(res => {
         const accountTitles = res.data.data;
@@ -63,15 +69,20 @@ const vuexModule = {
 
         accountTitles.sort((o1, o2) => {
           if (o1.type !== o2.type) {
-            return AccountTitleTypeDesc[o1.type].order -
-                AccountTitleTypeDesc[o2.type].order;
+            return (
+              AccountTitleTypeDesc[o1.type].order -
+              AccountTitleTypeDesc[o2.type].order
+            );
           }
           return o1.path === o2.path ? 0 : o1.path < o2.path ? -1 : 1;
         });
         for (let i = 0; i < accountTitles.length; ++i) {
           accountTitles[i].order = i;
         }
-        commit(mutaionKey.CACHE_ACCOUNT_TITLES, {accountTitles, accountTitleMap});
+        commit(mutaionKey.CACHE_ACCOUNT_TITLES, {
+          accountTitles,
+          accountTitleMap,
+        });
       });
     },
   },

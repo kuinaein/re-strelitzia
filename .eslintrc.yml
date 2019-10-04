@@ -3,31 +3,16 @@ env:
   es6: true
   jquery: true
 extends:
-  - 'eslint:recommended'
   - 'plugin:vue/essential'
+  - 'plugin:prettier/recommended'
+  - 'eslint:recommended'
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
 globals:
   process: false
 rules:
-  indent:
-    - error
-    - 2
-  linebreak-style:
-    - error
-    - unix
-  quotes:
-    - error
-    - single
-  semi:
-    - error
-    - always
-
-  no-console: off
+  no-console: 0
   no-unused-vars:
     - error
     - args: none
-  comma-dangle:
-    - error
-    - always-multiline

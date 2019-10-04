@@ -95,9 +95,13 @@ export default extendVue({
       AccountModule.stateKey.accountTitles,
       AccountModule.stateKey.accountTitleMap,
     ]),
-    targetTypes () {
+    targetTypes() {
       return Object.keys(AccountTitleTypeDesc).reduce((r, k) => {
-        if (AccountTitleTypeDesc[k].statements[FinancialStatementType.BALANCE_SHEET]) {
+        if (
+          AccountTitleTypeDesc[k].statements[
+            FinancialStatementType.BALANCE_SHEET
+          ]
+        ) {
           r[k] = k;
         }
         return r;
@@ -111,26 +115,32 @@ export default extendVue({
           ]
       );
     },
-    parentCandidates () {
-      return this.bsAccounts
-        .filter(a => a.type === this.editing.bsAccount.type &&
-            !csvContains(a.path, this.editing.bsAccount.path, ACCOUNT_PATH_SEPARATOR));
+    parentCandidates() {
+      return this.bsAccounts.filter(
+        a =>
+          a.type === this.editing.bsAccount.type &&
+          !csvContains(
+            a.path,
+            this.editing.bsAccount.path,
+            ACCOUNT_PATH_SEPARATOR
+          )
+      );
     },
   },
   watch: {
-    'editing.bsAccount.type' () {
+    'editing.bsAccount.type'() {
       this.editing.bsAccount.parentId = null;
     },
   },
   methods: {
     ...AccountModule.mapActions([AccountModule.actionKey.LOAD_ALL]),
-    accountTypeClass (type) {
+    accountTypeClass(type) {
       switch (type) {
-      case AccountTitleType.ASSET:
-      case AccountTitleType.NET_ASSET:
-        return 'table-success';
-      case AccountTitleType.LIABILITY:
-        return 'table-danger';
+        case AccountTitleType.ASSET:
+        case AccountTitleType.NET_ASSET:
+          return 'table-success';
+        case AccountTitleType.LIABILITY:
+          return 'table-danger';
       }
     },
     create() {
@@ -149,17 +159,26 @@ export default extendVue({
     //         alert('開始残高を取得できません');
     //       });
     //     },
-    doSave () {
+    doSave() {
       const promise = this.editing.bsAccount.id
-        ? axios.put(`${this.apiRoot}/account/bs/${this.editing.bsAccount.id}`, this.editing)
+        ? axios.put(
+            `${this.apiRoot}/account/bs/${this.editing.bsAccount.id}`,
+            this.editing
+          )
         : axios.post(`${this.apiRoot}/account/bs`, this.editing);
-      promise.then(() => {
-        alert(`勘定科目「${this.editing.bsAccount.name}」を保存しました`);
-        this[AccountModule.actionKey.LOAD_ALL]();
-        this.$refs.editDlg.close();
-      }).catch(err => {
-        alert(`勘定科目「${this.editing.bsAccount.name}」の保存に失敗しました:  ${err}`);
-      });
+      promise
+        .then(() => {
+          alert(`勘定科目「${this.editing.bsAccount.name}」を保存しました`);
+          this[AccountModule.actionKey.LOAD_ALL]();
+          this.$refs.editDlg.close();
+        })
+        .catch(err => {
+          alert(
+            `勘定科目「${
+              this.editing.bsAccount.name
+            }」の保存に失敗しました:  ${err}`
+          );
+        });
     },
   },
 });

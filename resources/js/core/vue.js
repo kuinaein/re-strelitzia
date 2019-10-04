@@ -2,11 +2,11 @@ import { CoreModule } from '@/core/CoreModule';
 
 const BaseVue = {
   computed: CoreModule.mapState([CoreModule.stateKey.apiRoot]),
-  mounted () {
+  mounted() {
     this.streInit && this.streInit();
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       for (const routeRecord of to.matched) {
         for (const inst of Object.values(routeRecord.instances)) {
           if (this === inst) {
@@ -18,9 +18,10 @@ const BaseVue = {
     },
   },
   methods: {
-    formatCurrency (n) {
-      return !n ? ''
-        : n.toLocaleString('ja-JP', {style: 'currency', currency: 'JPY'});
+    formatCurrency(n) {
+      return !n
+        ? ''
+        : n.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' });
     },
   },
 };
