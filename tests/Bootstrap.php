@@ -1,7 +1,10 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Tests;
 
+use Exception;
 use Illuminate\Contracts\Console\Kernel;
 use PHPUnit\Runner\AfterLastTestHook;
 use PHPUnit\Runner\BeforeFirstTestHook;
@@ -37,6 +40,10 @@ class Bootstrap implements BeforeFirstTestHook, AfterLastTestHook
 
     public function executeAfterLastTest(): void
     {
-        array_map('unlink', glob('bootstrap/cache/*.phpunit.php'));
+        $files = glob('bootstrap/cache/*.phpunit.php');
+        if (!$files) {
+            throw new Exception();
+        }
+        array_map('unlink', $files);
     }
 }

@@ -1,8 +1,11 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -53,15 +56,16 @@ class LoginController extends Controller
     /**
      * Googleログイン後のコールバック
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function handleProviderCallback()
     {
         $email = \Socialite::driver('google')->user()->getEmail();
         if (env('LOGIN_USER') !== $email) {
             abort(403);
-            throw new \Exception('到達不能コード');
+            throw new Exception('到達不能コード');
         }
+        /** @var \Illuminate\Contracts\Auth\Authenticatable */
         $user = \App\User::firstOrCreate(['email' => $email], ['name' => $email, 'password' => '']);
         \Auth::login($user);
         return \Response::redirectTo(session(self::REDIRECT_SESSION_KEY));

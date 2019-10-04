@@ -1,5 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
 
+declare(strict_types=1);
+
+use App\Domain\Account\Dto\AccountTitleType;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -15,31 +18,33 @@ use Illuminate\Foundation\Inspiring;
 
 Artisan::command('stre:cs', function () {
     $this->info('PHP Code Beautifier and Fixer ...');
-    passthru(base_path('vendor/bin/phpcbf') . ' --standard=' . base_path('phpcs.xml'));
+    passthru(base_path('vendor/bin/phpcbf') . ' --standard=' . resource_path('misc/phpcs.xml'));
     $this->info('PHP_CodeSniffer ...');
-    passthru(base_path('vendor/bin/phpcs') . ' --standard=' . base_path('phpcs.xml'));
-    // $this->info('PHPStan ...');
-    // passthru(base_path('vendor/bin/phpstan') . ' analyze');
+    passthru(base_path('vendor/bin/phpcs') . ' --standard=' . resource_path('misc/phpcs.xml'));
+    $this->info('PHPStan ...');
+    passthru(base_path('vendor/bin/phpstan') . ' analyze -c ' . resource_path('misc/phpstan.neon'));
 
-    // $buf = [];
-    // $this->info('PHPMD ...');
-    // exec(base_path('vendor/bin/phpmd ') . implode(',',[
-    //     app_path(),
-    //     base_path('tests'),
-    //     base_path('routes'),
-    //     config_path(),
-    //     database_path(),
-    // ]) . ' html ' . base_path('phpmd.xml'), $buf);
-    // file_put_contents(base_path('phpmd-result.html'), $buf);
-    // exec('xdg-open ' . base_path('phpmd-result.html'));
+    $buf = [];
+    $this->info('PHPMD ...');
+    exec(base_path('vendor/bin/phpmd ') . implode(',', [
+        app_path(),
+        base_path('bootstrap'),
+        config_path(),
+        database_path(),
+        base_path('routes'),
+        base_path('tests'),
+    ]) . ' html ' . resource_path('misc/phpmd.xml'), $buf);
+    file_put_contents(resource_path('misc/phpmd-result.html'), $buf);
+    exec('start ' . resource_path('misc/phpmd-result.html'));
 
-    // $this->info('PHP Copy/Paste Detector ...');
-    // passthru(base_path('vendor/bin/phpcpd') . ' --min-tokens 30 ' . implode(' ', [
-    //     app_path(),
-    //     base_path('tests'),
-    //     base_path('routes'),
-    //     config_path(),
-    // ]));
+    $this->info('PHP Copy/Paste Detector ...');
+    passthru(base_path('vendor/bin/phpcpd') . ' --min-tokens 30 ' . implode(' ', [
+        app_path(),
+        base_path('bootstrap'),
+        config_path(),
+        base_path('tests'),
+        base_path('routes'),
+    ]));
 
     passthru('yarn lint-fix');
 })->describe('lint, 静的解析とコード整形');

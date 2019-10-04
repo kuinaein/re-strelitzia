@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ruleset name="Custom_PSR2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/squizlabs/PHP_CodeSniffer/phpcs.xsd">
+  <arg name="basepath" value="../.." />
+  <file>../../app</file>
+  <file>../../bootstrap</file>
+  <exclude-pattern>*/bootstrap/cache/*</exclude-pattern>
+  <file>../../config</file>
+  <file>../../database</file>
+  <file>../../tests</file>
+  <file>../../routes</file>
+  <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php" />
+  <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+    <properties>
+      <property name="newlinesCountBetweenOpenTagAndDeclare" value="2" />
+      <property name="newlinesCountAfterDeclare" value="2" />
+      <property name="spacesCountAroundEqualsSign" value="0" />
+    </properties>
+  </rule>
+  <rule ref="PSR2" />
+  <rule ref="PSR1.Classes.ClassDeclaration">
+    <exclude-pattern>*/re-strelitzia/database/*</exclude-pattern>
+  </rule>
+</ruleset>

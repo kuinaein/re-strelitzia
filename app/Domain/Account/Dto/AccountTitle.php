@@ -1,26 +1,68 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Account\Dto;
+
+use Carbon\Carbon;
+use Exception;
+use JsonSerializable;
+use ReflectionClass;
 
 /**
  * 勘定科目
  *
- * @property-read int $id
- * @property string $name
- * @property \App\Domain\Account\Dto\SystemAccountTitleKey|null $systemKey
- * @property AccountTitleType $type
- * @property int|null $parentId
- * @property-read \Carbon\Carbon $createdAt
- * @property-read \Carbon\Carbon $updatedAt
+ * @property-read int|null $id
+ * @property-read string $name
+ * @property-read SystemAccountTitleKey|null $systemKey
+ * @property-read AccountTitleType $type
+ * @property-read int|null $parentId
+ * @property-read Carbon|null $createdAt
+ * @property-read Carbon|null $updatedAt
  */
-class AccountTitle
+final class AccountTitle implements JsonSerializable
 {
+    /** @var \Illuminate\Support\Collection $bag */
+    private $bag;
+
+    public function __construct(
+        ?int $id,
+        string $name,
+        ?SystemAccountTitleKey $systemKey,
+        AccountTitleType $type,
+        ?int $parentId = null,
+        ?Carbon $createdAt = null,
+        ?Carbon $updatedAt = null
+    ) {
+        // TODO キャッシュしないとまずそう
+        $ctor = (new ReflectionClass(self::class))->getConstructor();
+        if (!$ctor) {
+            throw new Exception(self::class . 'のコンストラクタをリフレクションで読み取れません');
+        }
+        $pnames = collect($ctor->getParameters())->map(function ($p) {
+            return $p->getName();
+        });
+        $this->bag = $pnames->combine(func_get_args());
+    }
+
+    public function __get($name)
+    {
+        return $this->bag[$name];
+    }
+
     public static function fromRequest(array $ar)
     {
-        $self = new AccountTitle();
-        $self->name = $ar['name'];
-        $self->type = new AccountTitleType($ar['type']);
-        $self->parentId = is_null($ar['parentId']) ? null : intval($ar['parentId'], 10);
-        return $self;
+        return new AccountTitle(
+            $ar['id'] ?? null,
+            $ar['name'],
+            null,
+            new AccountTitleType($ar['type']),
+            is_null($ar['parentId']) ? null : intval($ar['parentId'], 10)
+        );
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->bag->jsonSerialize();
     }
 }

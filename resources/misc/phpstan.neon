@@ -1,0 +1,24 @@
+parameters:
+  level: max
+  paths:
+    - app
+    - bootstrap
+    - config
+    - database
+    - tests
+    - routes
+  excludes_analyse::
+    - bootstrap/cache/*
+  autoload_directories:
+    - database
+  autoload_files:
+    - resources/misc/_ide_helper.php
+    - resources/misc/_ide_helper_models.php
+  ignoreErrors:
+    - '#Using \$this outside a class.#' # クロージャーの $this に誤反応するのでパス
+    - '#Undefined variable: \$this#' #　同上
+    - '#Undefined variable: \$factory#' # DB の factoryに誤反応するのでパス
+    - '#Access to an undefined property Illuminate\\Http\\Request::\$#'
+    - '#Call to an undefined static method Illuminate\\Support\\Str::[a-z]+\(\)#'
+
+    - '#Constructor of class App\\Domain\\[a-zA-Z]+\\Dto\\AccountTitle has an unused parameter \$#'

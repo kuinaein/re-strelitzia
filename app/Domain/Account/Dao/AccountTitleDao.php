@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Account\Dao;
 
@@ -7,6 +9,7 @@ use App\Domain\Account\Dto\AccountTitleType;
 use App\Domain\Account\Dto\SystemAccountTitleKey;
 use App\Domain\Account\Model\AccountTitleModel;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Collection;
 
 class AccountTitleDao
@@ -20,15 +23,17 @@ class AccountTitleDao
 
     private function convertModelToDto(AccountTitleModel $model): AccountTitle
     {
-        $dto = new AccountTitle();
-        $dto->id = $model->id;
-        $dto->name = $model->name;
-        $dto->systemKey = '' === $model->system_key ? null : new SystemAccountTitleKey($model->system_key);
-        $dto->type = new AccountTitleType($model->type);
-        $dto->parentId = 0 === $model->parent_id ? null : $model->parent_id;
-        $dto->createdAt = Carbon::createFromFormat(config('stre.datetime_format'), $model->created_at);
-        $dto->updatedAt = Carbon::createFromFormat(config('stre.datetime_format'), $model->updated_at);
-        return $dto;
+        return new AccountTitle(
+            $model->id,
+            $model->name,
+            '' === $model->system_key ? null : new SystemAccountTitleKey($model->system_key),
+            new AccountTitleType($model->type),
+            0 === $model->parent_id ? null : $model->parent_id,
+            // Carbon::createFromFormat(config('stre.datetime_format'), $model->created_at) ?: null,
+            // Carbon::createFromFormat(config('stre.datetime_format'), $model->updated_at) ?: null
+            $model->created_at,
+            $model->updated_at
+        );
     }
 
     private function convertDtoToModel(AccountTitle $dto): AccountTitleModel
@@ -57,6 +62,10 @@ class AccountTitleDao
     {
         $model = $this->convertDtoToModel($dto);
         $model->save();
-        return $this->convertModelToDto($model->fresh());
+        $freshModel = $model->fresh();
+        if (!$freshModel) {
+            throw new Exception('更新後の勘定科目の取得に失敗！ : ' . $dto->name);
+        }
+        return $this->convertModelToDto($freshModel);
     }
 }

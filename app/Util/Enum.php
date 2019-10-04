@@ -1,6 +1,12 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Util;
+
+use InvalidArgumentException;
+use JsonSerializable;
+use ReflectionObject;
 
 /**
  * PHPで列挙型(enum)を作る
@@ -10,17 +16,17 @@ namespace App\Util;
  *
  * @license https://creativecommons.org/publicdomain/zero/1.0/deed.ja CC-0 1.0
  */
-abstract class Enum implements \JsonSerializable
+abstract class Enum implements JsonSerializable
 {
     private $scalar;
 
     public function __construct($value)
     {
-        $ref = new \ReflectionObject($this);
+        $ref = new ReflectionObject($this);
         $consts = $ref->getConstants();
 
         if (!in_array($value, $consts, true)) {
-            throw new \InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
 
         $this->scalar = $value;
@@ -35,7 +41,7 @@ abstract class Enum implements \JsonSerializable
 
     final public function __toString()
     {
-        return (string)$this->scalar;
+        return (string) $this->scalar;
     }
 
     // 元の値を取り出すメソッド。

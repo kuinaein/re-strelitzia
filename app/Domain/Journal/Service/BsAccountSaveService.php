@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Journal\Service;
 
@@ -19,7 +21,7 @@ class BsAccountSaveService
 {
     // private $dao;
     private $accountDao;
-    private $journalDao;
+    // private $journalDao;
 
     public function __construct(
         // BsAccountDao $dao,
@@ -36,22 +38,23 @@ class BsAccountSaveService
      * @param int           $openingBalance
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function create(AccountTitle $account, int $openingBalance) : AccountTitle
+    public function create(AccountTitle $account, int $openingBalance): AccountTitle
     {
         $this->validate($account, $openingBalance);
         $op = $this->accountDao->findOrFailBySystemKey(
             new SystemAccountTitleKey(SystemAccountTitleKey::OPENING_BALANCE)
         );
-        $a = \DB::transaction(function () use ($account, $openingBalance, $op) {
+        $a = \DB::transaction(function () use ($account) {
+            //, $openingBalance, $op) {
             $a = $this->accountDao->createOrFail($account);
-            $isAsset = $account->type === AccountTitleType::ASSET;
-        //     $j = new AccountingJournal();
+            // $isAsset = $account->type === AccountTitleType::ASSET;
+            //     $j = new AccountingJournal();
             // MySQLのDATE型の最小値は1000-01-01なので一応そちらに合わせておく
-        //     $j->journalDate = (string)Carbon::createFromDate(1000, 1, 1);
-        //     $j->debitAccountId = $isAsset ? $a->id : $op->id;
-        //     $j->creditAccountId = $isAsset ? $op->id : $a->id;
-        //     $j->amount = $openingBalance;
-        //     $this->journalDao->save($j);
+            //     $j->journalDate = (string)Carbon::createFromDate(1000, 1, 1);
+            //     $j->debitAccountId = $isAsset ? $a->id : $op->id;
+            //     $j->creditAccountId = $isAsset ? $op->id : $a->id;
+            //     $j->amount = $openingBalance;
+            //     $this->journalDao->save($j);
             return $a;
         });
         \Log::notice('資産・負債科目の追加', ['新科目' => $a]);
@@ -90,7 +93,7 @@ class BsAccountSaveService
      * @param int               $openingBalance
      * @param null|AccountTitle $old
      */
-    private function validate(AccountTitle $account, int $openingBalance, AccountTitle $old = null) : void
+    private function validate(AccountTitle $account, int $openingBalance, AccountTitle $old = null): void
     {
         $ar = [
             'name' => $account->name,
@@ -100,9 +103,9 @@ class BsAccountSaveService
             'name' => 'required',
             'openingBalance' => 'numeric|required|min:0',
         ])
-        // ->sometimes('updatedAt', 'date_equals:' . optional($old)->bsAccoount, function ($o) {
-        //   return $o->id;
-        // })
-        ->validate();
+            // ->sometimes('updatedAt', 'date_equals:' . optional($old)->bsAccoount, function ($o) {
+            //   return $o->id;
+            // })
+            ->validate();
     }
 }
