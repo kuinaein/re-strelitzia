@@ -30,9 +30,9 @@ final class AccountTitle implements JsonSerializable
         string $name,
         ?SystemAccountTitleKey $systemKey,
         AccountTitleType $type,
-        ?int $parentId = null,
-        ?Carbon $createdAt = null,
-        ?Carbon $updatedAt = null
+        ?int $parentId,
+        ?Carbon $createdAt,
+        ?Carbon $updatedAt
     ) {
         // TODO キャッシュしないとまずそう
         $ctor = (new ReflectionClass(self::class))->getConstructor();
@@ -57,7 +57,9 @@ final class AccountTitle implements JsonSerializable
             $ar['name'],
             null,
             new AccountTitleType($ar['type']),
-            is_null($ar['parentId']) ? null : intval($ar['parentId'], 10)
+            is_null($ar['parentId']) ? null : intval($ar['parentId'], 10),
+            null,
+            null
         );
     }
 

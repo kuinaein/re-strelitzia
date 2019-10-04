@@ -1,9 +1,8 @@
 {
     "name": "kuinaein/re-strelitzia",
     "type": "project",
-    "description": "Re:Strelitzia",
-    "keywords": [
-    ],
+    "description": "A personal finance software",
+    "keywords": [],
     "license": "MIT",
     "require": {
         "php": "^7.2",

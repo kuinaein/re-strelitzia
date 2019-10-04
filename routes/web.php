@@ -15,4 +15,6 @@ declare(strict_types=1);
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider')->name('login');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
+
+// とりあえす /api とかぶる場合は404にする
 Route::view('/{path}', 'index')->where('path', '^(|[^a].*|a[^p].*)$')->middleware('auth');

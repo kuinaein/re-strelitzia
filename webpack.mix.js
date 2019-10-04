@@ -18,7 +18,8 @@ const usePug = {
   options: { basedir: path.resolve(__dirname, 'resources/js') },
 };
 
-mix.js('resources/js/app.js', 'public/js')
+mix
+  .js('resources/js/app.js', 'public/js')
   .webpackConfig({
     resolve: {
       extensions: ['.js', '.json', '.vue'],
@@ -28,18 +29,31 @@ mix.js('resources/js/app.js', 'public/js')
       },
     },
     module: {
-      rules: [{
-        test: /\.pug$/,
-        oneOf: [
-          {
-            resourceQuery: /^\?vue/,
-            use: [usePug],
-          },
-          {
-            use: ['raw-loader', usePug],
-          },
-        ],
-      }],
+      rules: [
+        {
+          test: /\.pug$/,
+          oneOf: [
+            {
+              resourceQuery: /^\?vue/,
+              use: [usePug],
+            },
+            {
+              use: ['raw-loader', usePug],
+            },
+          ],
+        },
+      ],
     },
   })
   .sass('resources/sass/app.scss', 'public/css');
+
+if ('production' !== process.env.NODE_ENV) {
+  const CircularDependencyPlugin = require('circular-dependency-plugin');
+  mix.sourceMaps().webpackConfig({
+    plugins: [
+      new CircularDependencyPlugin({
+        exclude: /node_modules/,
+      }),
+    ],
+  });
+}

@@ -1,6 +1,7 @@
 {
   "editor.formatOnSave": true,
   "eslint.autoFixOnSave": true,
+  // Javascript
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -11,10 +12,14 @@
   ],
   "eslint.packageManager": "yarn",
   "vetur.format.defaultFormatter.js": "none",
+  // YAML
   "yaml.format.singleQuote": true,
   "yaml.schemas": {
     "http://json.schemastore.org/prettierrc": [
       ".prettierrc.yml"
     ]
+  },
+  "files.associations": {
+    ".env*": "shellscript"
   }
 }
