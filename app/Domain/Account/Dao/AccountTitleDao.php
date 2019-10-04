@@ -8,7 +8,6 @@ use App\Domain\Account\Dto\AccountTitle;
 use App\Domain\Account\Dto\AccountTitleType;
 use App\Domain\Account\Dto\SystemAccountTitleKey;
 use App\Domain\Account\Model\AccountTitleModel;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Collection;
 
@@ -29,8 +28,6 @@ class AccountTitleDao
             '' === $model->system_key ? null : new SystemAccountTitleKey($model->system_key),
             new AccountTitleType($model->type),
             0 === $model->parent_id ? null : $model->parent_id,
-            // Carbon::createFromFormat(config('stre.datetime_format'), $model->created_at) ?: null,
-            // Carbon::createFromFormat(config('stre.datetime_format'), $model->updated_at) ?: null
             $model->created_at,
             $model->updated_at
         );
@@ -64,7 +61,7 @@ class AccountTitleDao
         $model->save();
         $freshModel = $model->fresh();
         if (!$freshModel) {
-            throw new Exception('更新後の勘定科目の取得に失敗！ : ' . $dto->name);
+            throw new Exception();
         }
         return $this->convertModelToDto($freshModel);
     }

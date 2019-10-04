@@ -35,6 +35,33 @@ namespace App\Domain\Account\Model{
 	class AccountTitleModel extends \Eloquent {}
 }
 
+namespace App\Domain\Journal\Model{
+/**
+ * App\Domain\Journal\Model\AccountingJournalModel
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon $journal_date
+ * @property int $debit_account_id
+ * @property int $credit_account_id
+ * @property string $remarks
+ * @property int $amount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereCreditAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereDebitAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereJournalDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereRemarks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereUpdatedAt($value)
+ */
+	class AccountingJournalModel extends \Eloquent {}
+}
+
 namespace App{
 /**
  * App\User

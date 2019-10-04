@@ -6,31 +6,27 @@ namespace App\Domain\Journal\Service;
 
 use App\Domain\Account\Dao\AccountTitleDao;
 use App\Domain\Account\Dto\AccountTitle;
-// use App\Domain\Account\Dao\BsAccountDao;
 use App\Domain\Account\Dto\AccountTitleType;
-// use App\Domain\Account\Dto\BsAccount;
 use App\Domain\Account\Dto\SystemAccountTitleKey;
 use App\Domain\Journal\Dao\AccountingJournalDao;
 use App\Domain\Journal\Dto\AccountingJournal;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
+use DB;
 
 /**
  * Accountに置くと名前空間同士の相互参照になるのでこちらに置く.
  */
 class BsAccountSaveService
 {
-    // private $dao;
     private $accountDao;
-    // private $journalDao;
+    private $journalDao;
 
     public function __construct(
-        // BsAccountDao $dao,
-        AccountTitleDao $accountDao
-        // AccountingJournalDao $journalDao
+        AccountTitleDao $accountDao,
+        AccountingJournalDao $journalDao
     ) {
-        // $this->dao = $dao;
         $this->accountDao = $accountDao;
-        // $this->journalDao = $journalDao;
+        $this->journalDao = $journalDao;
     }
 
     /**
@@ -44,17 +40,21 @@ class BsAccountSaveService
         $op = $this->accountDao->findOrFailBySystemKey(
             new SystemAccountTitleKey(SystemAccountTitleKey::OPENING_BALANCE)
         );
-        $a = \DB::transaction(function () use ($account) {
-            //, $openingBalance, $op) {
+        $a = DB::transaction(function () use ($account, $openingBalance, $op) {
             $a = $this->accountDao->createOrFail($account);
-            // $isAsset = $account->type === AccountTitleType::ASSET;
-            //     $j = new AccountingJournal();
-            // MySQLのDATE型の最小値は1000-01-01なので一応そちらに合わせておく
-            //     $j->journalDate = (string)Carbon::createFromDate(1000, 1, 1);
-            //     $j->debitAccountId = $isAsset ? $a->id : $op->id;
-            //     $j->creditAccountId = $isAsset ? $op->id : $a->id;
-            //     $j->amount = $openingBalance;
-            //     $this->journalDao->save($j);
+            $isAsset = AccountTitleType::ASSET === $account->type->valueOf();
+            $j = new AccountingJournal(
+                null,
+                $isAsset ? $a->id : $op->id,
+                $isAsset ? $op->id : $a->id,
+                // MySQLのDATE型の最小値は1000-01-01なので一応そちらに合わせておく
+                Carbon::createFromDate(1000, 1, 1),
+                '',
+                $openingBalance,
+                null,
+                null
+            );
+            $this->journalDao->createOrFail($j);
             return $a;
         });
         \Log::notice('資産・負債科目の追加', ['新科目' => $a]);

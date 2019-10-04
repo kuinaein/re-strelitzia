@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Core\StreCase;
+use App\Domain\Journal\Dto\AccountingJournal;
 use App\Util\ConsoleUtil;
 
 /*

@@ -19,6 +19,7 @@ parameters:
     - '#Undefined variable: \$this#' #　同上
     - '#Undefined variable: \$factory#' # DB の factoryに誤反応するのでパス
     - '#Access to an undefined property Illuminate\\Http\\Request::\$#'
-    - '#Call to an undefined static method Illuminate\\Support\\Str::[a-z]+\(\)#'
+    - '#Call to an undefined method Illuminate\\Support\\Fluent::references\(\)#'
+    - '#Call to an undefined static method Illuminate\\Support\\Str::\w+\(\)#'
 
-    - '#Constructor of class App\\Domain\\[a-zA-Z]+\\Dto\\AccountTitle has an unused parameter \$#'
+    - '#Constructor of class App\\Domain\\\w+\\Dto\\\w+ has an unused parameter \$#'
