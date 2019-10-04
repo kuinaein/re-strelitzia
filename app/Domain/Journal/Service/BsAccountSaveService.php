@@ -13,6 +13,7 @@ use App\Domain\Journal\Dto\AccountingJournal;
 use Illuminate\Support\Carbon;
 use DB;
 use Log;
+use Validator;
 
 /**
  * Accountに置くと名前空間同士の相互参照になるのでこちらに置く.
@@ -99,7 +100,7 @@ class BsAccountSaveService
             'name' => $account->name,
             'openingBalance' => $openingBalance,
         ];
-        \Validator::make($ar, [
+        Validator::make($ar, [
             'name' => 'required',
             'openingBalance' => 'numeric|required|min:0',
         ])

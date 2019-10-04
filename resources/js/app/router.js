@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 
 // import SummaryPage from '@/app/SummaryPage';
 import BsAccountListPage from '@/account/BsAccountListPage';
-// import PlAccountListPage from '@/account/PlAccountListPage';
+import PlAccountListPage from '@/account/PlAccountListPage';
 // import JournalSchedulePage from '@/journal/JournalSchedulePage';
 // import LedgerPage from '@/journal/LedgerPage';
 
@@ -20,11 +20,11 @@ const routes = [
     name: 'bs-account-list',
     component: BsAccountListPage,
   },
-  //   {
-  //     path: '/account/pl',
-  //     name: 'pl-account-list',
-  //     component: PlAccountListPage,
-  //   },
+  {
+    path: '/account/pl',
+    name: 'pl-account-list',
+    component: PlAccountListPage,
+  },
   //   {
   //     path: '/journal/schedule',
   //     name: 'journal-schedule',
