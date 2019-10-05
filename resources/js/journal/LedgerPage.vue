@@ -57,13 +57,13 @@ include /components/mixins
       template(v-if="null !== editingEntry.id") 修正
     form
       .form-group.row
-        label(class=entryLabelClass) 日付
-        div(class=entryControlClass)
-          datetime-chooser.form-control(v-model="editingEntry.journalDate" type="date" autofocus required)
-      .form-group.row
         label(class=entryLabelClass) 摘要
         div(class=entryControlClass)
-          input.form-control(v-model="editingEntry.remarks")
+          input.form-control(v-model="editingEntry.remarks" autofocus)
+      .form-group.row
+        label(class=entryLabelClass) 日付
+        div(class=entryControlClass)
+          datetime-chooser.form-control(v-model="editingEntry.journalDate" type="date" required)
       .form-groupr.row
         label(class=entryLabelClass) 口座
         div(class=entryControlClass)
@@ -78,7 +78,7 @@ include /components/mixins
         div(class=entryControlClass)
           numeric-input.form-control(v-model="editingEntry.amount" min="1" required)
       .form-group.row: div.offset-sm-3(class=controlClass)
-        button.btn.btn-primary(type="button" @click="doMakeEntry()") 保存
+        button.btn.btn-primary(type="button" @click="doSaveEntry()") 保存
         +modalCloseBtn("キャンセル")
 </template>
 
@@ -86,7 +86,7 @@ include /components/mixins
 import moment from 'moment';
 import axios from 'axios';
 
-import { MOMENT_DATETIME_FORMAT } from '@/util/lang';
+import { MOMENT_DATETIME_FORMAT, MOMENT_YEARMONTH_FORMAT } from '@/util/lang';
 import { extendVue } from '@/core/vue';
 import { AccountTitleTypeDesc } from '@/account/constants';
 import { AccountModule } from '@/account/AccountModule';
@@ -114,14 +114,14 @@ export default extendVue({
       AccountModule.stateKey.accountTitleMap,
     ]),
     prevMonth() {
-      return moment(this.month, 'YYYY-MM')
+      return moment(this.month, MOMENT_YEARMONTH_FORMAT)
         .subtract(1, 'months')
-        .format('YYYY-MM');
+        .format(MOMENT_YEARMONTH_FORMAT);
     },
     nextMonth() {
-      return moment(this.month, 'YYYY-MM')
+      return moment(this.month, MOMENT_YEARMONTH_FORMAT)
         .add(1, 'months')
-        .format('YYYY-MM');
+        .format(MOMENT_YEARMONTH_FORMAT);
     },
     isDebitSide() {
       return AccountTitleTypeDesc[this.accountTitleMap[this.accountId].type]
@@ -164,9 +164,13 @@ export default extendVue({
       this.editingEntry = this.$options.data().editingEntry;
       this.$refs.entryDlg.open();
     },
-    doMakeEntry() {
+    doSaveEntry() {
       if (!this.editingEntry.anotherAccountId) {
         alert('相手科目を選択してください');
+        return;
+      }
+      if (!this.editingEntry.journalDate.startsWith(this.month)) {
+        alert('仕訳日が別の月です');
         return;
       }
       const postData = {

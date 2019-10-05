@@ -51,25 +51,26 @@ include /components/mixins
         li <strong>支出</strong>の場合: <strong>借方に費用科目</strong>を選択してください。
         li <strong>収入</strong>の場合: <strong>貸方に収益科目</strong>を選択してください。
         li 相手科目に資産・負債科目を選択してください。
+        li <strong>口座間移動</strong>の場合: <strong>借方に移動先の資産科目</strong>を選択してください。
       form
         .form-group.row
           div.offset-sm-4(class=controlClass): label
             input(type="checkbox" v-model="editing.enabled")
             | 有効
         .form-group.row
+          label(class=labelClass) 摘要
+          div(class=controlClass)
+            input.form-control(v-model="editing.remarks" autofocus)
+        .form-group.row
           label(class=labelClass) スケジュール
           div.form-control-static(class=controlClass)
             | 毎月&nbsp;
-            numeric-input(v-model="editing.postDate" min="1" max="28" autofocus required)
+            numeric-input(v-model="editing.postDate" min="1" max="28" required)
             | &nbsp;日に実行
         .form-group.row
           label(class=labelClass) 次の仕訳日
           div(class=controlClass)
             datetime-chooser.form-control(v-model="editing.nextPostDate" type="date" required)
-        .form-group.row
-          label(class=labelClass) 摘要
-          div(class=controlClass)
-            input.form-control(v-model="editing.remarks")
         .form-group.row
           label(class=labelClass) 借方科目
           div(class=controlClass)

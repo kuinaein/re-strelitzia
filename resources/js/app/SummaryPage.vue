@@ -29,6 +29,7 @@ import {
   FinancialStatementType,
 } from '@/account/constants';
 
+import { MOMENT_YEARMONTH_FORMAT } from '@/util/lang';
 import { extendVue } from '@/core/vue';
 import { mapConstants } from '@/util/vue-util';
 import { AccountModule } from '@/account/AccountModule';
@@ -47,7 +48,7 @@ export default extendVue({
     }),
     ...AccountModule.mapState([AccountModule.stateKey.accountTitleMap]),
     thisMonth() {
-      return moment().format('YYYY-MM');
+      return moment().format(MOMENT_YEARMONTH_FORMAT);
     },
   },
   methods: {
