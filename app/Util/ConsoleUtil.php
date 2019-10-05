@@ -15,7 +15,7 @@ class ConsoleUtil
 
     public static function spawnInRichTerminal(string $cmd)
     {
-        $p = popen('start /b cmd /c conemu -single -run ' . $cmd, 'r');
+        $p = popen('start /b cmd /c conemu64 -single -run ' . $cmd, 'r');
         if (!$p) {
             throw new Exception();
         }

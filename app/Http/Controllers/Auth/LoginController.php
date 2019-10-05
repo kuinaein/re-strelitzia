@@ -7,6 +7,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Log;
+use Request;
+use Socialite;
+use URL;
 
 class LoginController extends Controller
 {
@@ -49,8 +53,9 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        \Request::session()->flash(self::REDIRECT_SESSION_KEY, \URL::previous());
-        return \Socialite::driver('google')->redirect();
+        Log::info('ログイン施行');
+        Request::session()->flash(self::REDIRECT_SESSION_KEY, URL::previous());
+        return Socialite::driver('google')->redirect();
     }
 
     /**
@@ -60,14 +65,16 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $email = \Socialite::driver('google')->user()->getEmail();
+        $email = Socialite::driver('google')->user()->getEmail();
         if (env('LOGIN_USER') !== $email) {
+            Log::warning('ログイン失敗', ['email' => $email]);
             abort(403);
             throw new Exception('到達不能コード');
         }
         /** @var \Illuminate\Contracts\Auth\Authenticatable */
         $user = \App\User::firstOrCreate(['email' => $email], ['name' => $email, 'password' => '']);
         \Auth::login($user);
+        Log::info('ログイン', ['email' => $email]);
         return \Response::redirectTo(session(self::REDIRECT_SESSION_KEY));
     }
 }

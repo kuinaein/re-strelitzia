@@ -14,7 +14,7 @@ include /components/mixins
           td: router-link.btn.btn-primary(
                 :to="{name: 'ledger', params: {accountId: a.accountId, month: thisMonth}}")
             +faIcon("edit")
-            template 記帳
+            | 元帳
           th {{ accountTitleMap[a.accountId].name }}
           td.text-right {{ formatCurrency(a.amount) }}
 </template>

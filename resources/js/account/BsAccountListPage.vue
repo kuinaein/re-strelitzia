@@ -8,7 +8,7 @@ include /components/mixins
 
   button.btn.btn-secondary(type="button" @click="create")
     +faIcon("plus")
-    template 追加
+    | 追加
   table.table.table-bordered.table-striped
     thead
       tr
@@ -20,11 +20,11 @@ include /components/mixins
       tr(v-for="a of bsAccounts")
         td: button.btn.btn-primary(type="button" @click="edit(a.id)")
           +faIcon("edit")
-          template 編集
+          | 編集
         td(v-t="'enum.accountType.' + a.type" :class="accountTypeClass(a.type)")
         th: span(:style="'display:inline-block;padding-left: ' + (Math.max(0, a.level - 1) * 2) + 'ex'")
           template(v-if="0 !== a.level") |-
-          template {{ a.name }}
+          | {{ a.name }}
         td {{ a.path }}
   modal(ref="editDlg")
     template(slot="title") 資産・負債科目の

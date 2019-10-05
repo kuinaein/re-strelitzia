@@ -7,6 +7,7 @@ namespace App\Providers;
 use Illuminate\Support\Carbon;
 use DB;
 use Illuminate\Support\ServiceProvider;
+use Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
             for ($i = 0; $i < $count; $i++) {
                 $sql = preg_replace('/\\?/', $query->bindings[$i], $sql, 1);
             }
-            logger($sql);
+            Log::debug($sql);
         });
     }
 }

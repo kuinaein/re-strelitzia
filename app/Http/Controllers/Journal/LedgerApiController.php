@@ -31,30 +31,30 @@ class LedgerApiController extends Controller
      */
     private $trialBalanceBuildService;
 
-    // /**
-    //  * @var LedgerPageLoadService
-    //  */
-    // private $ledgerPageLoadService;
+    /**
+     * @var LedgerPageLoadService
+     */
+    private $ledgerPageLoadService;
 
     public function __construct(
         AccountingJournalDao $journalDao,
         AccountTitleDao $accountDao,
-        TrialBalanceBuildService $trialBalanceBuildService
-        //     LedgerPageLoadService $ledgerPageLoadService
+        TrialBalanceBuildService $trialBalanceBuildService,
+        LedgerPageLoadService $ledgerPageLoadService
     ) {
         $this->journalDao = $journalDao;
         $this->accountDao = $accountDao;
         $this->trialBalanceBuildService = $trialBalanceBuildService;
-        //     $this->ledgerPageLoadService = $ledgerPageLoadService;
+        $this->ledgerPageLoadService = $ledgerPageLoadService;
     }
 
-    // public function index(Request $request, int $accountId, string $month) : array
-    // {
-    //     $start = Carbon::parse($month)->startOfMonth();
-    //     $end = $start->copy()->addMonth()->startOfMonth();
-    //     $result = $this->ledgerPageLoadService->load($accountId, $start, $end);
-    //     return ['data' => $result, 'message' => 'OK'];
-    // }
+    public function index(Request $request, int $accountId, string $month): array
+    {
+        $start = Carbon::parse($month)->startOfMonth();
+        $end = $start->copy()->addMonth()->startOfMonth();
+        $result = $this->ledgerPageLoadService->load($accountId, $start, $end);
+        return ['data' => $result, 'message' => 'OK'];
+    }
 
     public function showTrialBalance(Request $request): array
     {

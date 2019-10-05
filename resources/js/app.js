@@ -1,13 +1,18 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
+import moment from 'moment';
 
 import './bootstrap';
+
+import { MOMENT_ISO_DATE_FORMAT } from '@/util/lang';
 
 import strings from '@/app/strings';
 import { router } from '@/app/router';
 import { store } from '@/app/vuex';
 
+import DateTimeChooser from '@/components/DatetimeChooser';
 import Modal from '@/components/Modal';
+import AccountChooser from '@/components/AccountChooser';
 import Frame from '@/app/Frame';
 
 if ('production' !== process.env.NODE_ENV) {
@@ -54,7 +59,11 @@ window.axios.interceptors.response.use(
 
 window.Vue = Vue;
 Vue.use(VueI18n);
+Vue.component('datetime-chooser', DateTimeChooser);
 Vue.component('modal', Modal);
+Vue.component('account-chooser', AccountChooser);
+
+Vue.filter('date', dt => moment(dt).format(MOMENT_ISO_DATE_FORMAT));
 
 const i18n = new VueI18n({
   locale: 'ja',

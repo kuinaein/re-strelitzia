@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Journal\Dto;
 
 use App\Core\StreCase;
+use Exception;
 use Illuminate\Support\Carbon;
 
 /**
@@ -32,5 +33,23 @@ class AccountingJournal extends StreCase
         ?Carbon $updatedAt
     ) {
         parent::__construct();
+    }
+
+    public static function fromRequest(array $ar)
+    {
+        $journalDate = Carbon::createFromFormat(config('stre.datetime_format'), $ar['journalDate']);
+        if (!$journalDate) {
+            throw new Exception('仕訳の日付が不正:' . $ar['journalDate']);
+        }
+        return new AccountingJournal(
+            $ar['id'] ?? null,
+            $ar['debitAccountId'],
+            $ar['creditAccountId'],
+            $journalDate,
+            $ar['remarks'],
+            $ar['amount'],
+            null,
+            null
+        );
     }
 }
