@@ -29,20 +29,20 @@ entity "accounting_journal (仕訳)" as accounting_journal TRAN {
 }
 account_title ----o{ accounting_journal
 
-' entity "journal_schedule (定期仕訳スケジュール)" as journal_schedule MASTER {
-'   +id SERIAL [PK]
-'   #debit_account_id (借方勘定科目ID) INT [FK]
-'   #credit_account_id (貸方勘定科目ID) INT [FK]
-'   --
-'   enabled (有効フラグ) BOOLEAN
-'   post_date (仕訳日) INT
-'   remarks (摘要) VARCHAR
-'   amount (金額) INT
-'   next_post_date (次の仕訳日) DATE
-'   --
-'   created_at TIMESTAMP
-'   updated_at TIMESTAMP
-' }
-' account_title ----o{ journal_schedule
+entity "journal_schedule (定期仕訳スケジュール)" as journal_schedule MASTER {
+  +id SERIAL [PK]
+  #debit_account_id (借方勘定科目ID) INT [FK]
+  #credit_account_id (貸方勘定科目ID) INT [FK]
+  --
+  enabled (有効フラグ) BOOLEAN
+  post_date (仕訳日) INT
+  remarks (摘要) VARCHAR
+  amount (金額) INT
+  next_post_date (次の仕訳日) DATE
+  --
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+account_title ----o{ journal_schedule
 
 @enduml

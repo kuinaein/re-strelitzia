@@ -9,26 +9,28 @@ use Exception;
 use Illuminate\Support\Carbon;
 
 /**
- * 仕訳
+ * 仕訳スケジュール
  *
  * @property-read int|null $id
  * @property-read int $debitAccountId 借方勘定科目ID
- * @property-read int $creditAccountId 貸方勘定科目ID
- * @property-read Carbon $journalDate
+ * @property-read int $creditAccountId 借方勘定科目ID
+ * @property-read bool $enabled 有効フラグ
  * @property-read string $remarks 摘要
  * @property-read int $amount 金額
+ * @property-read Carbon $nextPostDate 次の仕訳日
  * @property-read Carbon|null $createdAt
  * @property-read Carbon|null $updatedAt
  */
-final class AccountingJournal extends StreCase
+final class JournalSchedule extends StreCase
 {
     public function __construct(
         ?int $id,
         int $debitAccountId,
         int $creditAccountId,
-        Carbon $journalDate,
+        bool $enabled,
         string $remarks,
         int $amount,
+        Carbon $nextPostDate,
         ?Carbon $createdAt,
         ?Carbon $updatedAt
     ) {
@@ -37,17 +39,18 @@ final class AccountingJournal extends StreCase
 
     public static function fromRequest(array $ar)
     {
-        $journalDate = Carbon::createFromFormat(config('stre.datetime_format'), $ar['journalDate']);
-        if (!$journalDate) {
-            throw new Exception('仕訳の日付が不正:' . $ar['journalDate']);
+        $nextPostDate = Carbon::createFromFormat(config('stre.datetime_format'), $ar['nextPostDate']);
+        if (!$nextPostDate) {
+            throw new Exception('次の仕訳日が不正:' . $ar['nextPostDate']);
         }
-        return new AccountingJournal(
+        return new JournalSchedule(
             $ar['id'] ?? null,
             $ar['debitAccountId'],
             $ar['creditAccountId'],
-            $journalDate,
+            $ar['enabled'],
             $ar['remarks'],
             $ar['amount'],
+            $nextPostDate,
             null,
             null
         );

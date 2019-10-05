@@ -1,12 +1,12 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace App\Domain\Account\Dto;
 
 use App\Util\Enum;
 
-class AccountTitleType extends Enum
+final class AccountTitleType extends Enum
 {
     public const ASSET = 'ASSET';
     public const LIABILITY = 'LIABILITY';

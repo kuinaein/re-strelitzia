@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 import SummaryPage from '@/app/SummaryPage';
 import BsAccountListPage from '@/account/BsAccountListPage';
 import PlAccountListPage from '@/account/PlAccountListPage';
-// import JournalSchedulePage from '@/journal/JournalSchedulePage';
+import JournalSchedulePage from '@/journal/JournalSchedulePage';
 import LedgerPage from '@/journal/LedgerPage';
 
 Vue.use(VueRouter);
@@ -25,11 +25,11 @@ const routes = [
     name: 'pl-account-list',
     component: PlAccountListPage,
   },
-  //   {
-  //     path: '/journal/schedule',
-  //     name: 'journal-schedule',
-  //     component: JournalSchedulePage,
-  //   },
+  {
+    path: '/journal/schedule',
+    name: 'journal-schedule',
+    component: JournalSchedulePage,
+  },
   {
     path: '/journal/ledger/:accountId/:month',
     name: 'ledger',
