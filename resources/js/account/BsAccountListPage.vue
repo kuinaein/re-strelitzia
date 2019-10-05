@@ -55,7 +55,7 @@ include /components/mixins
       .form-group.row
         label(class=labelClass) 開始残高
         div(class=controlClass)
-          input.form-control(v-model="editing.openingBalance" type="number" min="0" required)
+          numeric-input.form-control(v-model="editing.openingBalance" min="0" required)
       .form-group.row: div.offset-sm-3(class=controlClass)
         button.btn.btn-primary(type="button" @click="doSave") 保存
         +modalCloseBtn("キャンセル")

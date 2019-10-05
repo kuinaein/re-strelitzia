@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Account;
 
@@ -24,10 +24,10 @@ class BsAccountApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) : array
+    public function store(Request $request): array
     {
         $a = AccountTitle::fromRequest($request->bsAccount);
-        $this->saveService->create($a, (int)$request->openingBalance);
+        $this->saveService->create($a, $request->openingBalance);
         return ['messsage' => 'OK'];
     }
 
@@ -37,10 +37,10 @@ class BsAccountApiController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int                      $id
      */
-    public function update(Request $request, int $id) : array
+    public function update(Request $request, int $id): array
     {
         $a = AccountTitle::fromRequest($request->bsAccount);
-        $this->saveService->update($a, (int)$request->openingBalance);
+        $this->saveService->update($a, $request->openingBalance);
         return ['messsage' => 'OK'];
     }
 }

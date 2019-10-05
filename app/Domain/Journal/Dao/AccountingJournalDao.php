@@ -13,7 +13,6 @@ use App\Domain\Journal\Dto\AccountingJournal;
 use App\Domain\Journal\Model\AccountingJournalModel;
 use DB;
 use Eloquent;
-use Exception;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 

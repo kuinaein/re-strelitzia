@@ -39,7 +39,7 @@ include /components/mixins
         td(v-if="s.enabled") 有効
         td(v-else)
         td 毎月 {{ s.postDate }} 日
-        td {{ s.nextPostDate }}
+        td {{ s.nextPostDate | date }}
         td {{ accountTitleMap[s.debitAccountId].name }}
         td {{ accountTitleMap[s.creditAccountId].name }}
         td {{ formatCurrency(s.amount) }}
@@ -60,12 +60,12 @@ include /components/mixins
           label(class=labelClass) スケジュール
           div.form-control-static(class=controlClass)
             | 毎月&nbsp;
-            input(type="number" v-model="editing.postDate" min="1" max="28" autofocus required)
+            numeric-input(v-model="editing.postDate" min="1" max="28" autofocus required)
             | &nbsp;日に実行
         .form-group.row
           label(class=labelClass) 次の仕訳日
           div(class=controlClass)
-            input.form-control(type="date" v-model="editing.nextPostDate" required)
+            datetime-chooser.form-control(v-model="editing.nextPostDate" type="date" required)
         .form-group.row
           label(class=labelClass) 摘要
           div(class=controlClass)
@@ -81,7 +81,7 @@ include /components/mixins
         .form-group.row
           label(class=labelClass) 金額
           div(class=controlClass)
-            input.form-control(type="number" v-model="editing.amount" min="1" required)
+            numeric-input.form-control(v-model="editing.amount" min="1" required)
         .form-group.row: div.offset-sm-3(class=controlClass)
           button.btn.btn-primary(type="button" @click="doSave") 保存
           +modalCloseBtn("キャンセル")
@@ -91,7 +91,7 @@ include /components/mixins
 import axios from 'axios';
 import moment from 'moment';
 
-import { MOMENT_ISO_DATE_FORMAT } from '@/util/lang';
+import { MOMENT_ISO_DATE_FORMAT, MOMENT_DATETIME_FORMAT } from '@/util/lang';
 import { extendVue } from '@/core/vue';
 import { AccountModule } from '@/account/AccountModule';
 
@@ -105,7 +105,7 @@ export default extendVue({
         nextPostDate: moment()
           .add(1, 'month')
           .date(1)
-          .format(MOMENT_ISO_DATE_FORMAT),
+          .format(MOMENT_DATETIME_FORMAT),
         remarks: '',
         debitAccountId: null,
         creditAccountId: null,
@@ -140,7 +140,7 @@ export default extendVue({
       if (next.isBefore(moment())) {
         next.add(1, 'month');
       }
-      this.editing.nextPostDate = next.format(MOMENT_ISO_DATE_FORMAT);
+      this.editing.nextPostDate = next.format(MOMENT_DATETIME_FORMAT);
     },
   },
   methods: {
@@ -242,6 +242,7 @@ export default extendVue({
           creditAccountId: schedule.creditAccountId,
           amount: schedule.amount,
         };
+        // TODO 本来はサーバ側でトランザクションをかけてやるべきでは
         promise = promise
           .then(() => {
             return axios.post(`${this.apiRoot}/journal`, postData);
@@ -261,12 +262,12 @@ export default extendVue({
               newSchedule.nextPostDate = prevPostDate
                 .add(2, 'months')
                 .date(schedule.postDate)
-                .format(MOMENT_ISO_DATE_FORMAT);
+                .format(MOMENT_DATETIME_FORMAT);
             } else {
               newSchedule.nextPostDate = prevPostDate
                 .add(1, 'month')
                 .date(schedule.postDate)
-                .format(MOMENT_ISO_DATE_FORMAT);
+                .format(MOMENT_DATETIME_FORMAT);
             }
             return axios.put(
               `${this.apiRoot}/journal/schedule/${newSchedule.id}`,

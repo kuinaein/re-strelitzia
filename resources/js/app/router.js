@@ -9,6 +9,9 @@ import LedgerPage from '@/journal/LedgerPage';
 
 Vue.use(VueRouter);
 
+/**
+ * @type {import('vue-router').RouteConfig[]}
+ */
 const routes = [
   {
     path: '/',
@@ -34,11 +37,14 @@ const routes = [
     path: '/journal/ledger/:accountId/:month',
     name: 'ledger',
     component: LedgerPage,
+    props: r => {
+      return {
+        accountId: parseInt(r.params.accountId),
+        month: r.params.month,
+      };
+    },
   },
-].map(v => {
-  v.props = true;
-  return v;
-});
+];
 
 export const router = new VueRouter({
   mode: 'history',

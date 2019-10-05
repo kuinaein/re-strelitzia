@@ -11,6 +11,7 @@ import { router } from '@/app/router';
 import { store } from '@/app/vuex';
 
 import DateTimeChooser from '@/components/DatetimeChooser';
+import NumericInput from '@/components/NumericInput';
 import Modal from '@/components/Modal';
 import AccountChooser from '@/components/AccountChooser';
 import Frame from '@/app/Frame';
@@ -59,11 +60,12 @@ window.axios.interceptors.response.use(
 
 window.Vue = Vue;
 Vue.use(VueI18n);
+Vue.filter('date', dt => moment(dt).format(MOMENT_ISO_DATE_FORMAT));
+
+Vue.component('numeric-input', NumericInput);
 Vue.component('datetime-chooser', DateTimeChooser);
 Vue.component('modal', Modal);
 Vue.component('account-chooser', AccountChooser);
-
-Vue.filter('date', dt => moment(dt).format(MOMENT_ISO_DATE_FORMAT));
 
 const i18n = new VueI18n({
   locale: 'ja',

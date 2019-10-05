@@ -32,7 +32,7 @@ namespace App\Domain\Account\Model{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Account\Model\AccountTitleModel whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Account\Model\AccountTitleModel whereUpdatedAt($value)
  */
-	class AccountTitleModel extends \Eloquent {}
+	final class AccountTitleModel extends \Eloquent {}
 }
 
 namespace App\Domain\Journal\Model{
@@ -59,7 +59,38 @@ namespace App\Domain\Journal\Model{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereRemarks($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\AccountingJournalModel whereUpdatedAt($value)
  */
-	class AccountingJournalModel extends \Eloquent {}
+	final class AccountingJournalModel extends \Eloquent {}
+}
+
+namespace App\Domain\Journal\Model{
+/**
+ * App\Domain\Journal\Model\JournalScheduleModel
+ *
+ * @property int $id
+ * @property bool $enabled
+ * @property int $post_date
+ * @property string $remarks
+ * @property int $debit_account_id
+ * @property int $credit_account_id
+ * @property int $amount
+ * @property \Illuminate\Support\Carbon $next_post_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereCreditAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereDebitAccountId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereEnabled($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereNextPostDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel wherePostDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereRemarks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Domain\Journal\Model\JournalScheduleModel whereUpdatedAt($value)
+ */
+	final class JournalScheduleModel extends \Eloquent {}
 }
 
 namespace App{

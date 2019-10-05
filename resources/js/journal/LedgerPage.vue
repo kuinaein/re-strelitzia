@@ -76,7 +76,7 @@ include /components/mixins
       .form-group.row
         label(class=entryLabelClass) 金額
         div(class=entryControlClass)
-          input.form-control(type="number" v-model="editingEntry.amount" min="1" required)
+          numeric-input.form-control(v-model="editingEntry.amount" min="1" required)
       .form-group.row: div.offset-sm-3(class=controlClass)
         button.btn.btn-primary(type="button" @click="doMakeEntry()") 保存
         +modalCloseBtn("キャンセル")
@@ -100,11 +100,14 @@ export default extendVue({
         journalDate: moment().format(MOMENT_DATETIME_FORMAT),
         remarks: '',
         anotherAccountId: null,
-        amount: '',
+        amount: 0,
       },
     };
   },
-  props: ['accountId', 'month'],
+  props: {
+    accountId: Number,
+    month: String,
+  },
   computed: {
     ...AccountModule.mapState([
       AccountModule.stateKey.accountTitles,

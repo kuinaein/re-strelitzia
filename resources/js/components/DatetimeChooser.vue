@@ -8,7 +8,10 @@ import moment from 'moment';
 import { MOMENT_DATETIME_FORMAT } from '@/util/lang';
 
 export default {
-  props: ['value', 'type'],
+  props: {
+    value: String,
+    type: { validator: p => 'date' === p },
+  },
   computed: {
     valueForElement() {
       return Vue.filter(this.type)(this.value);
@@ -16,8 +19,10 @@ export default {
   },
   methods: {
     handleInput(ev, o) {
-      const el = ev.target;
-      this.$emit('input', moment(el.value).format(MOMENT_DATETIME_FORMAT));
+      this.$emit(
+        'input',
+        moment(ev.target.value).format(MOMENT_DATETIME_FORMAT)
+      );
     },
   },
 };

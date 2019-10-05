@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
  * @property-read int $debitAccountId 借方勘定科目ID
  * @property-read int $creditAccountId 借方勘定科目ID
  * @property-read bool $enabled 有効フラグ
+ * @property-read int $postDate 仕訳日
  * @property-read string $remarks 摘要
  * @property-read int $amount 金額
  * @property-read Carbon $nextPostDate 次の仕訳日
@@ -28,6 +29,7 @@ final class JournalSchedule extends StreCase
         int $debitAccountId,
         int $creditAccountId,
         bool $enabled,
+        int $postDate,
         string $remarks,
         int $amount,
         Carbon $nextPostDate,
@@ -48,6 +50,7 @@ final class JournalSchedule extends StreCase
             $ar['debitAccountId'],
             $ar['creditAccountId'],
             $ar['enabled'],
+            $ar['postDate'],
             $ar['remarks'],
             $ar['amount'],
             $nextPostDate,

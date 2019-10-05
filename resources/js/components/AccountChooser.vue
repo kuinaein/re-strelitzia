@@ -1,7 +1,7 @@
 <template lang="pug">
 select(:value="value" @input="handleInput")
   option(v-for="a of accountTitles"
-      v-if="null === a.systemKey && a.id !== parseInt(exclude)"
+      v-if="null === a.systemKey && a.id !== exclude"
       :value="a.id" :key="'account-chooser-choice-' + a.id") [
     span(v-t="'enum.accountType.' + accountTitleMap[a.id].type")
     template ]{{ a.name }}
@@ -12,7 +12,10 @@ import { extendVue } from '@/core/vue';
 import { AccountModule } from '@/account/AccountModule';
 
 export default extendVue({
-  props: ['value', 'exclude'],
+  props: {
+    value: Number,
+    exclude: Number,
+  },
   computed: {
     ...AccountModule.mapState([
       AccountModule.stateKey.accountTitles,
