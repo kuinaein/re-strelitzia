@@ -20,6 +20,7 @@
     ]
   },
   "files.associations": {
-    ".env*": "shellscript"
+    ".env*": "shellscript",
+    "*.neon": "yaml"
   }
 }

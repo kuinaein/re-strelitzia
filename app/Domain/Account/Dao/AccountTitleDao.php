@@ -12,7 +12,7 @@ use App\Domain\Account\Dto\SystemAccountTitleKey;
 use App\Domain\Account\Model\AccountTitleModel;
 use Eloquent;
 
-final class AccountTitleDao extends StreDao
+class AccountTitleDao extends StreDao
 {
     protected static $dtoClass = AccountTitle::class;
 

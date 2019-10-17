@@ -20,6 +20,8 @@ parameters:
     - '#Undefined variable: \$factory#' # DB の factoryに誤反応するのでパス
     - '#Access to an undefined property Illuminate\\Http\\Request::\$#'
     - '#Call to an undefined method Illuminate\\Support\\Fluent::references\(\)#'
-    - '#Call to an undefined static method Illuminate\\Support\\Str::\w+\(\)#'
+    - '#Call to an undefined static method (Illuminate\\Support\\)?Str::\w+\(\)#'
+    - '#Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\HigherOrderMessage::times\(\)#'
 
     - '#Constructor of class App\\Domain\\\w+\\Dto\\\w+ has an unused parameter \$#'
+    - '#Call to an undefined static method App\\Domain\\Account\\Dto\\AccountTitleType::[A-Z_]+\(\)#'

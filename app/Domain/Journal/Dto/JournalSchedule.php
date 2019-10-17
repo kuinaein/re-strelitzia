@@ -36,7 +36,7 @@ final class JournalSchedule extends StreCase
         ?Carbon $createdAt,
         ?Carbon $updatedAt
     ) {
-        parent::__construct();
+        parent::__construct(func_get_args());
     }
 
     public static function fromRequest(array $ar)

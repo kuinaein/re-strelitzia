@@ -20,6 +20,8 @@ use ReflectionClass;
  * @property-read int|null $parentId
  * @property-read Carbon|null $createdAt
  * @property-read Carbon|null $updatedAt
+ *
+ * @method AccountTitle withName(string $name)
  */
 final class AccountTitle extends StreCase
 {
@@ -32,7 +34,7 @@ final class AccountTitle extends StreCase
         ?Carbon $createdAt,
         ?Carbon $updatedAt
     ) {
-        parent::__construct();
+        parent::__construct(func_get_args());
     }
 
     public static function fromRequest(array $ar)
