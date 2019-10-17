@@ -24,15 +24,7 @@ Re:「すとれりちあ」はできたてほやほやの家計簿ソフトで�
    `CREATE USER re_strelitzia WITH ENCRYPTED PASSWORD 're_strelitzia';`<br/>
    `CREATE DATABASE re_strelitzia WITH OWNER re_strelitzia ENCODING 'UTF8' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;`
 1. `composer install --no-dev` を実行する。
-1. `php artisan key:generate` を実行する。
 1. `php artisan stre:install` を実行する。
-
-### 旧すとれりちあからのアップグレード
-
-データベースを作り直す必要はありません。
-Re:すとれりちあの `.env` を開き、 `DB_DATABASE`, `DB_USERNAME` 及び `DB_PASSWORD` の値をすべて `strelitzia` に書き換えてください。
-
-`composer install` 以後は上記と同じです。
 
 ## 起動方法
 

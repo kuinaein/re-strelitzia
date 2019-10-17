@@ -35,6 +35,9 @@ Artisan::command('stre:clean', function (): void {
 })->describe('キャッシュなどのクリア');
 
 Artisan::command('stre:update', function (): void {
+    if (!file_exists(storage_path('oauth-private.key'))) {
+        $this->call('passport:install');
+    }
     $this->call('migrate');
     $this->call('stre:deploy');
 })->describe('アップデート');
