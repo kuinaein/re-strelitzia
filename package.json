@@ -12,7 +12,7 @@
     "lint-fix": "cross-env NODE_ENV=development eslint ./resources --ext .js,.vue --fix"
   },
   "dependencies": {
-    "axios": "^0.19",
+    "axios": "^0.21",
     "bootstrap-honoka": "^4.3.1",
     "bootstrap-jquery-slim": "^4.1.1-1",
     "cross-env": "^5.1",
