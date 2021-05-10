@@ -19,7 +19,7 @@
     "font-awesome": "^4.7.0",
     "jquery-slim": "^3.0.0",
     "laravel-mix": "^4.0.7",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
